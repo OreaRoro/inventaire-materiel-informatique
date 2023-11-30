@@ -1,0 +1,69 @@
+
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+
+<h1 class="h3 mb-3">Suivi des matériels</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                        <a href="/api/generatepdf-history" title="Exporter en pdf"  class="btn btn-outline-danger"><i class="fa fa-file-pdf"></i> Exproter</a>
+                    </div>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <table id="datatables-basic" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Employé(e)s</th>
+                        <th>Matériels</th>
+                       <th>Catégories</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Utilisateur</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var i = 0; i < history.length; i++) { %>
+                        <% if (history[i].action !== "Retourné") { %>
+                            <tr>
+                                <td><%= i + 1 %></td>
+                                <td><%= (history[i].employe) ? history[i].employe.name : 'Employé Supprimé' %></td>
+                                <td><%= (history[i].materiel) ? history[i].materiel.designation : 'Matériel Supprimé' %></td>
+                                <td><%= (history[i].materiel) ? history[i].materiel.category.title : 'Matériel Supprimé' %></td>
+                                <td>
+                                    <p
+                                            class="<% if(history[i].action === "Accepté") { %>
+                                                text-success
+                                               <% } else if (history[i].action === "Refusé") { %>
+                                                text-danger
+                                               <% } else if(history[i].action === "En attente") { %>
+                                                text-warning
+                                           <% } else { %>text-success <%}%>"
+                                    >
+                                        <%= history[i].action %>
+                                    </p>
+                                </td>
+                                <td><%= new Date(history[i].createdAt).toLocaleDateString('fr') %></td>
+                                <td><%= (history[i].utilisateur) ? history[i].utilisateur.name : 'Utilisateur Supprimé' %></td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->
+

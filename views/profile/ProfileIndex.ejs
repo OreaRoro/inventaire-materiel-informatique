@@ -1,0 +1,114 @@
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Profile</h1>
+
+<div class="row">
+    <div class="col-md-3 col-xl-2">
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Paramètres</h5>
+            </div>
+
+            <div class="list-group list-group-flush" role="tablist">
+                <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
+                    Compte
+                </a>
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
+                    Mot de passe
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9 col-xl-10">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="account" role="tabpanel">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-actions float-right">
+                            <!--<div class="dropdown show">
+                                <a href="#" data-toggle="dropdown" data-display="static">
+                                    <i class="align-middle" data-feather="more-horizontal"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>-->
+                        </div>
+                        <h5 class="card-title mb-0">Informations</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="update_profile" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="<%= users._id %>">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="inputUsername">Nom</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Nom" value="<%= users.name %>" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Prénom</label>
+                                        <input type="text" class="form-control" id="lastname" placeholder="Prénom" value="<%= users.lastname %>" name="lastname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" placeholder="Email" value="<%= users.email %>" name="email">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center" >
+                                        <label for="img" style="cursor: pointer;"> <img alt="Chris Wood" src="img/avatars/<%= (user.filename) ? user.filename : "img1.jpg"%>" class="rounded-circle img-responsive mt-2" width="128" height="128"></label>
+                                        <div class="mt-2">
+                                            <label for="img" style="cursor: pointer;"><span class="btn btn-primary"><i class="fas fa-upload"></i> Upload</span></label>
+                                            <input type="file" name="img" id="img" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="password" role="tabpanel">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Mot de passe</h5>
+
+                        <form id="update_password">
+                            <input type="hidden" name="id" value="<%= users._id %>">
+                            <div class="form-group">
+                                <label for="Userpassword">Nouveau mot de passe</label>
+                                <input type="password" class="form-control" id="Userpassword" name="password">
+                                <span class="error jquery-validation-error small form-text invalid-feedback" id="error_password"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordConfirm">Confirmer le mot de passe</label>
+                                <input type="password" class="form-control" id="passwordConfirm" name="passwordconfirm">
+                                <span class="error jquery-validation-error small form-text invalid-feedback" id="error_passwordConfirm"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--FOOTER-->
+<%- include('../_partials/_footer') %>
+<!--/FOOTER-->

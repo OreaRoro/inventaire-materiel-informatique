@@ -1,0 +1,84 @@
+
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Catégories</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+
+
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <h5 class="card-title">Liste de tous les catégories</h5>
+                    <button type="button" class="btn btn-primary" onclick="add_category()">
+                        Nouveau  <i class="align-middle mr-2 fas fa-fw fa-plus-square"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="datatables-basic" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Catégories</th>
+                        <th>Quantité</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var i = 0; i < categories.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= categories[i].title %></td>
+                            <td><%= quantity[i].length %></td>
+                            <td>
+                                <button type="button" onclick="edit('<%= categories[i]._id %>')" class="btn btn-secondary" title="Modifier"><i class="align-middle" data-feather="edit"></i></button>
+                                <button type="button" data-id="<%= categories[i]._id %>" class="btn btn-danger delete" title="Supprimer"><i class="align-middle" data-feather="trash"></i></button>
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Default modal</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="form">
+                                <input type="hidden" name="id">
+                                <div class="modal-body m-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="category">Categorie</label>
+                                                <input type="text" class="form-control" name="title" id="category" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button type="button" onclick="save()" id="btnSave" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->
+
+

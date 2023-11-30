@@ -1,0 +1,73 @@
+
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Ajout Materiel</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="text-center">
+                    <h1>Formulaire d'ajout matériel</h1>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <form id="materiel_add">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="designation">Marque</label>
+                            <input type="text" id="designation" name="designation" class="form-control">
+                            <span class="error jquery-validation-error small form-text invalid-feedback" id="error_designation"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="serie">Numéro de série</label>
+                            <input type="text" id="serie" name="serie" class="form-control">
+                            <span class="error jquery-validation-error small form-text invalid-feedback" id="error_serie"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="status">Etat du matériel</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="Bon">Bon</option>
+                                <option value="Mauvais">Mauvais</option>
+                            </select>
+                            <span class="error jquery-validation-error small form-text invalid-feedback" id="error_status"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="category">Catégories</label>
+                            <select name="category" id="category" class="form-control">
+                                <% for(var j = 0; j < categories.length; j++) { %>
+                                    <option value="<%= categories[j]._id %>"><%= categories[j].title %></option>
+                                <% } %>
+                            </select>
+                            <span class="error jquery-validation-error small form-text invalid-feedback" id="error_category"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <!--<label for="img"><span class="btn btn-primary"><i class="fas fa-upload"></i> Upload</span></label>
+                            <input type="file" name="img" id="img" style="display: none;">-->
+                            <label for="category" class="form-label w-100">Image</label>
+                            <input type="file" id="img" name="img" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->
+

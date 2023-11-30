@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Connexion - G-Inventaire">
+    <meta name="author" content="Bootlab">
+
+    <title>Connexion - G-Inventaire</title>
+
+    <link href="/css/classic.css" rel="stylesheet">
+
+</head>
+
+<body>
+<main class="main d-flex w-100">
+    <div class="container d-flex flex-column">
+        <div class="row h-100">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                <div class="d-table-cell align-middle">
+
+                    <div class="text-center mt-4">
+                        <h1 class="h2">Bienvenu</h1>
+                        <p class="lead">
+                            Connecter vous pour continuer
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="m-sm-4">
+                                <div class="text-center">
+                                    <div class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+                                        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">x</span>
+                                        </button>
+                                        <div class="alert-icon">
+                                            <i class="far fa-fw fa-bell"></i>
+                                        </div>
+                                        <div class="alert-message">
+                                            <strong>
+                                                <p class="errors"></p>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <!--<img src="img\avatars\avatar.jpg" alt="Chris Wood" class="img-fluid rounded-circle" width="132" height="132">-->
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input class="form-control form-control-lg" type="email" name="email" placeholder="Entrer votre email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mot de passe</label>
+                                        <input class="form-control form-control-lg" type="password" name="password" placeholder="Entrer votre mot de passe">
+                                        <!-- <small>
+                                            <a href="pages-reset-password.html">Forgot password?</a>
+                                        </small>-->
+                                    </div>
+                                     <!--<div>
+                                        <div class="custom-control custom-checkbox align-items-center">
+                                            <input type="checkbox" class="custom-control-input" value="remember-me" name="remember-me" checked="">
+                                            <label class="custom-control-label text-small">Remember me next time</label>
+                                        </div>
+                                    </div>-->
+                                    <div class="text-center mt-3">
+                                        <!-- <a href="dashboard-default.html" class="btn btn-lg btn-primary">Sign in</a>-->
+                                      <button type="submit" class="btn btn-lg btn-primary">Se connecter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/js/app.js"></script>
+
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        // get values
+        const email = form.email.value;
+        const password = form.password.value;
+
+        try {
+            const res = await fetch("/api/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await res.json();
+            if (data.user) {
+                location.assign('/');
+            } else {
+                if(data.errors === "Email invalide") {
+                    $('#email').addClass('is-invalid');
+                    $('.alert').attr('style', "display: block;");
+                    $('.errors').text(data.errors);
+                }
+
+                if(data.errors === "Mot de passe incorrect"){
+                    $('#pwd').addClass('is-invalid');
+                    $('.alert').attr('style', "display: block;");
+                    $('.errors').text(data.errors);
+                }
+
+                if(data.errors === "Mot de passe ou email invalid"){
+                    $('#email').addClass('is-invalid');
+                    $('#pwd').addClass('is-invalid');
+                    $('.alert').attr('style', "display: block;");
+                    $('.errors').text(data.errors);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    })
+</script>
+
+</body>
+</html>

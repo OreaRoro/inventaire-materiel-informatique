@@ -1,0 +1,67 @@
+
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Edit Employé</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="text-center">
+                    <h1>Formulaire d'édition employe</h1>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <form id="employe_update">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="name">Nom</label>
+                            <input type="text" value="<%= employe.name %>" id="name" name="name" class="form-control">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="lastname">Prénom</label>
+                            <input type="text" value="<%= employe.lastname %>" id="lastname" name="lastname" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="adresse">Adresse</label>
+                            <input type="text" value="<%= employe.adresse %>" id="adresse" name="adresse" class="form-control">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="telephone">Téléphone</label>
+                            <input type="text" value="<%= employe.telephone %>" id="telephone" name="telephone" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <select name="fonction" id="fonction" class="form-control">
+                                <% for(var i = 0; i < fonction.length; i++) { %>
+                                    <% if (employe.fonction.title === fonction[i].title) { %>
+                                        <option value="<%= fonction[i]._id %>" selected><%= fonction[i].title %></option>
+                                    <% } %>
+                                    <option value="<%= fonction[i]._id %>"><%= fonction[i].title %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="<%= employe._id %>">
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->
+

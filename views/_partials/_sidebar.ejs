@@ -1,0 +1,107 @@
+<nav id="sidebar" class="sidebar" style="z-index: 1000;">
+    <div class="sidebar-content ">
+        <a class="sidebar-brand" href="/">
+            <i class="align-middle" data-feather="box"></i>
+            <span class="align-middle">G-Inventaires</span>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Accueil
+            </li>
+            <li class="sidebar-item <% if (title === "Dashboard") { %><%= 'active' %><% } %>">
+                <a href="#dashboards" data-toggle="collapse" class="sidebar-link <% if (title !== "Dashboard") { %><%= 'collapsed' %><% } %>">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tableau de bord</span>
+                </a>
+                <ul id="dashboards" class="sidebar-dropdown list-unstyled collapse <% if (title === "Dashboard") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                    <li class="sidebar-item <% if (title === "Dashboard") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/">Statistiques</a></li>
+                </ul>
+            </li>
+
+
+            <% if (user.role === "UTILISATEUR") { %>
+                <li class="sidebar-header">
+                    Applications
+                </li>
+                <li class="sidebar-item <% if (title === "Employe" || title === "Fonction") { %><%= 'active' %><% } %>">
+                    <a href="#ui" data-toggle="collapse" class="sidebar-link <% if (title !== "Employe" || title !== "Fonction") { %><%= 'collapsed' %><% } %>">
+                        <i class="align-middle mr-2 fas fa-fw fa-user-tie"></i> <span class="align-middle">Employé(e)s</span>
+                    </a>
+                    <ul id="ui" class="sidebar-dropdown list-unstyled collapse <% if (title === "Employe" || title === "Fonction") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                        <li class="sidebar-item <% if (title === "Employe") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/employe">Liste des employé(e)s</a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item <% if (title === "Materiel" || title === "Demande") { %><%= 'active' %><% } %>">
+                    <a href="#materiel" data-toggle="collapse" class="sidebar-link <% if (title !== "Materiel" || title !== "Demande") { %><%= 'collapsed' %><% } %>">
+                        <i class="align-middle mr-2 fas fa-fw fa-laptop"></i> <span class="align-middle">Matériels</span>
+                    </a>
+                    <ul id="materiel" class="sidebar-dropdown list-unstyled collapse <% if (title === "Materiel" || title === "Demande") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                        <li class="sidebar-item <% if (title === "Materiel") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/materiel">Matériels disponibles</a></li>
+                        <li class="sidebar-item <% if (title === "Demande") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/demande">Demande</a></li>
+                    </ul>
+                </li>
+            <% } %>
+
+            <% if (user.role === "ADMINISTRATEUR") { %>
+                <li class="sidebar-header">
+                    Administrations
+                </li>
+
+                <li class="sidebar-item <% if (title === "Users") { %><%= 'active' %><% } %>">
+                    <a href="#users" data-toggle="collapse" class="sidebar-link <% if (title !== "Users") { %><%= 'collapsed' %><% } %>">
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Utilisateurs</span>
+                    </a>
+                    <ul id="users" class="sidebar-dropdown list-unstyled collapse <% if (title === "Users") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                        <li class="sidebar-item <% if (title === "Users") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/user">Liste des utilisateurs</a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item <% if (title === "Employe" || title === "Fonction") { %><%= 'active' %><% } %>">
+                    <a href="#ui" data-toggle="collapse" class="sidebar-link <% if (title !== "Employe" || title !== "Fonction") { %><%= 'collapsed' %><% } %>">
+                        <i class="align-middle" data-feather="users"></i> <span class="align-middle">Employé(e)s</span>
+                    </a>
+                    <ul id="ui" class="sidebar-dropdown list-unstyled collapse <% if (title === "Employe" || title === "Fonction") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                        <li class="sidebar-item <% if (title === "Fonction") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/fonction">Fonctions</a></li>
+                        <li class="sidebar-item <% if (title === "Employe") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/employe">Liste des employé(e)s</a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item <% if (title === "Materiel" || title === "Category" || title === "Demande" || title === "Materiel en utilisation") { %><%= 'active' %><% } %>">
+                    <a href="#materiel" data-toggle="collapse" class="sidebar-link <% if (title !== "Materiel" || title !== "Category" || title !== "Demande") { %><%= 'collapsed' %><% } %>">
+                        <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Matériels</span>
+                    </a>
+                    <ul id="materiel" class="sidebar-dropdown list-unstyled collapse <% if (title === "Materiel" || title === "Category" || title === "Demande") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                        <li class="sidebar-item <% if (title === "Category") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/category">Catégories</a></li>
+                        <li class="sidebar-item <% if (title === "Materiel") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/materiel">Matériels disponibles</a></li>
+                        <li class="sidebar-item <% if (title === "Materiel en utilisation") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/materiel/use">Matériels en utilisations</a></li>
+                        <li class="sidebar-item <% if (title === "Demande") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/demande">Demande</a></li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item <% if (title === "Historique" || title === "Retour") { %><%= 'active' %><% } %>">
+                    <a href="#history" data-toggle="collapse" class="sidebar-link <% if (title !== "Historique" || title !== "Retour") { %><%= 'collapsed' %><% } %>">
+                        <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Historiques</span>
+                    </a>
+                    <ul id="history" class="sidebar-dropdown list-unstyled collapse <% if (title === "Historique" || title === "Retour") { %><%= 'show' %><% } %>" data-parent="#sidebar">
+                        <li class="sidebar-item <% if (title === "Historique") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/history">Démandes</a></li>
+                        <li class="sidebar-item <% if (title === "Retour") { %><%= 'active' %><% } %>"><a class="sidebar-link" href="/retour">Retour</a></li>
+                    </ul>
+                </li>
+            <% } %>
+        </ul>
+
+        <div class="sidebar-bottom d-none d-lg-block">
+            <div class="media">
+                <img class="rounded-circle mr-3" src="/img/avatars/<%= (user.filename) ? user.filename : "img1.jpg" %>" alt="Chris Wood" width="40" height="40">
+                <div class="media-body">
+                    <h5 class="mb-1"><%= user.name %> <%= user.lastname %></h5>
+                    <div>
+                        <i class="fas fa-circle text-success"></i> En ligne
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nav>

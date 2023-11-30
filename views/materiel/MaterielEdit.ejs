@@ -1,0 +1,77 @@
+
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Modification Materiel</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="text-center">
+                    <h1>Formulaire de modification du materiel: <%= materiel.designation %></h1>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <form id="materiel_update">
+                    <input type="hidden" name="id" value="<%= materiel._id %>">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="designation">Marque</label>
+                            <input type="text" value="<%= materiel.designation %>" id="designation" name="designation" class="form-control">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="serie">Numéro de série</label>
+                            <input type="text" value="<%= materiel.serie %>" id="serie" name="serie" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label for="status">Etat du matériel</label>
+                            <select name="status" id="status" class="form-control">
+                                <% if (materiel.status === "Bon"){ %>
+                                    <option value="Bon" selected>Bon</option>
+                                <% } else if (materiel.status === "Mauvais") { %>
+                                    <option value="Mauvais" selected>Mauvais</option>
+                                <% } %>
+                                <option value="Bon">Bon</option>
+                                <option value="Mauvais">Mauvais</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="category">Catégories</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="">Choisir une catégorie</option>
+                                <% for(var j = 0; j < categories.length; j++) { %>
+                                    <% if(categories[j].title === materiel.category.title) { %>
+                                        <option value="<%= categories[j]._id %>" selected><%= categories[j].title %></option>
+                                    <% } %>
+                                    <option value="<%= categories[j]._id %>"><%= categories[j].title %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label for="category" class="form-label w-100">Image</label>
+                            <input type="file" id="img" name="img" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->
+

@@ -1,0 +1,109 @@
+                    </div>
+                </main>
+                <footer class="footer" style="bottom: 0; right: 0; left: 0; position: fixed; z-index: 20;">
+                    <div class="container-fluid">
+                        <div class="row text-muted">
+                            <div class="col-12 text-center">
+                                <p class="mb-0">
+                                    &copy; <%= new Date().getFullYear();%> - <a href="" class="text-muted">Gestion des Inventaires</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="/js/jquery-3.6.1.js"></script>
+        <script src="/js/app.js"></script>
+        <script src="/datatables/jquery.dataTables.js"></script>
+        <script src="/datatables/dataTables.bootstrap4.js"></script>
+        <script src="/sweet-alert/sweetalert2.min.js"></script>
+        <script src="/notifyjs/notify.min.js"></script>
+        <% if (title === "Users") { %>
+            <script src="/js/UserScript.js"></script>
+        <% } %>
+        <% if (title === "Profile") { %>
+            <script src="/js/ProfileScript.js"></script>
+        <% } %>
+        <% if (title === 'Fonction') { %>
+            <script src="/js/FonctionScript.js"></script>
+        <% } %>
+        <% if (title === 'Employe') { %>
+            <script src="/js/EmployeScript.js"></script>
+        <% } %>
+        <% if (title === 'Category') { %>
+            <script src="/js/CategoryScript.js"></script>
+        <% } %>
+        <% if (title === 'Materiel' || title === "Materiel en utilisation") { %>
+            <script src="/js/MaterielScript.js"></script>
+        <% } %>
+        <% if (title === 'Demande') { %>
+            <script src="/js/DemandeScript.js"></script>
+        <% } %>
+        <script>
+            // DataTables
+            $(function () {
+                $("#datatables-basics").DataTable({
+                    language: {
+                        sProcessing: "Traitement en cours...",
+                        sSearch: "Rechercher&nbsp;:",
+                        sLengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                        sInfo:
+                            "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                        sInfoEmpty:
+                            "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                        sInfoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                        sInfoPostFix: "",
+                        sLoadingRecords: "Chargement en cours...",
+                        sZeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                        sEmptyTable: "Aucune donn&eacute;e disponible dans le tableau",
+                        oPaginate: {
+                            sFirst: "Premier",
+                            sPrevious: "Pr&eacute;c&eacute;dent",
+                            sNext: "Suivant",
+                            sLast: "Dernier",
+                        },
+                        oAria: {
+                            sSortAscending: ": activer pour trier la colonne par ordre croissant",
+                            sSortDescending:
+                                ": activer pour trier la colonne par ordre d&eacute;croissant",
+                        },
+                    },
+                    lengthMenu: [5, 10, 15, 20, 25],
+                    pageLength: 5,
+                });
+               let datatablesButtons = $("#datatables-basic").DataTable({
+                    language: {
+                        sProcessing: "Traitement en cours...",
+                        sSearch: "Rechercher&nbsp;:",
+                        sLengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                        sInfo:
+                            "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                        sInfoEmpty:
+                            "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                        sInfoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                        sInfoPostFix: "",
+                        sLoadingRecords: "Chargement en cours...",
+                        sZeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                        sEmptyTable: "Aucune donn&eacute;e disponible dans le tableau",
+                        oPaginate: {
+                            sFirst: "Premier",
+                            sPrevious: "Pr&eacute;c&eacute;dent",
+                            sNext: "Suivant",
+                            sLast: "Dernier",
+                        },
+                        oAria: {
+                            sSortAscending: ": activer pour trier la colonne par ordre croissant",
+                            sSortDescending:
+                                ": activer pour trier la colonne par ordre d&eacute;croissant",
+                        },
+                    },
+                    lengthMenu: [5, 10, 15, 20, 25],
+                    pageLength: 5,
+                });
+            });
+
+
+        </script>
+    </body>
+</html>

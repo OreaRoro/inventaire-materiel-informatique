@@ -1,0 +1,168 @@
+
+<!--HEADER-->
+<%- include('./_partials/_header') %>
+<!--/HEADER-->
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card flex-fill">
+            <div class="card-header">
+                <h5 class="card-title mb-0"><i class="feather-lg text-warning" data-feather="users"></i> Utilisateurs</h5>
+            </div>
+            <div class="card-body my-2">
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0 font-weight-light">
+                            <%= CountUser %>
+                        </h2>
+                    </div>
+                    <div class="col-4 text-right">
+                        <span class="text-muted"><%= (CountUser) / 100 %>%</span>
+                    </div>
+                </div>
+
+                <div class="progress progress-sm shadow-sm mb-1">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: <%= (compteurMateriel) / 100 %>%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card flex-fill">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="feather-lg text-primary" data-feather="user"></i> Employé(e)s</h5>
+                </div>
+                <div class="card-body my-2">
+                    <div class="row d-flex align-items-center mb-4">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0 font-weight-light">
+                                <%= compteurEmploye %>
+                            </h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="text-muted"><%= (compteurEmploye) / 100 %>%</span>
+                        </div>
+                    </div>
+
+                    <div class="progress progress-sm shadow-sm mb-1">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: <%= (compteurEmploye) / 100 %>%"></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card flex-fill">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="feather-lg text-success" data-feather="monitor"></i> Matériels</h5>
+                </div>
+                <div class="card-body my-2">
+                    <div class="row d-flex align-items-center mb-4">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0 font-weight-light">
+                                <%= compteurMateriel %>
+                            </h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span class="text-muted"><%= (compteurMateriel) / 100 %>%</span>
+                        </div>
+                    </div>
+
+                    <div class="progress progress-sm shadow-sm mb-1">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: <%= (compteurMateriel) / 100 %>%"></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+   <div class="col-md-12">
+
+       <div class="card">
+           <div class="card-header">
+               <div class="card-actions float-right">
+                   <select name="date" id="date" class="form-control" onchange="chartdata(this)">
+                       <option value="<%= new Date().getFullYear();%>" selected><%= new Date().getFullYear();%></option>
+                       <% for (let i = 24; i <= 30; i++) { %>
+                           <option value="20<%= i %>">20<%= i %></option>
+                       <% } %>
+                   </select>
+               </div>
+               <h5>Employé / Matériel / Utilisateur</h5>
+           </div>
+           <div class="card-body">
+               <div class="chart w-100">
+                   <div id="apexcharts-area"></div>
+               </div>
+           </div>
+       </div>
+
+
+   </div>
+</div>
+
+<input type="hidden" id="materiel" value="<%= materiel %>">
+
+<!--HEADER-->
+<%- include('./_partials/_footer') %>
+<!--/HEADER-->
+
+<script>
+    // Area chart
+    let options = {
+        chart: {
+            height: 350,
+            type: "area",
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: "smooth"
+        },
+        series: [{
+            name: "Employe",
+            data: [<%= employe %>]
+        }, {
+            name: "Materiel",
+            data: [<%= materiel %>]
+        }, {
+            name: "Utilisateur",
+            data: [<%= users %>]
+        }],
+        xaxis: {
+            type: "month",
+            categories: ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Dec"
+            ],
+        },
+        tooltip: {
+            x: {
+                format: "dd/MM/yy HH:mm"
+            },
+        }
+    }
+    let chart = new ApexCharts(
+        document.querySelector("#apexcharts-area"),
+        options
+    );
+    chart.render();
+    function chartdata(date) {
+        let url = 'http://localhost:8000/chart';
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {date: date.value},
+            dataType: 'JSON',
+            success: function (response) {
+                let employe = response.employe;
+                let materiel = response.materiel;
+                let user = response.users;
+                options.series[0].data = employe;
+                options.series[1].data = materiel;
+                options.series[2].data = user;
+                chart.update();
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+    }
+</script>

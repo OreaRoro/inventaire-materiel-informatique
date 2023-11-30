@@ -1,0 +1,98 @@
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Utilisateurs</h1>
+
+<div class="row" >
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <h5 class="card-title">Listes des Administrateur</h5>
+                    <a href="/user/add" class="btn btn-primary text-right">Nouveau  <i class="align-middle mr-2 fas fa-fw fa-plus-square"></i></a>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <table id="datatables-basic" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var j = 0; j < users.length; j++) { %>
+                        <% if(users[j].role === "ADMINISTRATEUR") { %>
+                            <tr>
+                                <td><%= j + 1 %></td>
+                                <td><%= users[j].name %></td>
+                                <td><%= users[j].email %></td>
+                                <td><%= users[j].role %></td>
+                                <td>
+                                    <% if (user.email === users[j].email || users[j].role !== "ADMINISTRATEUR") { %>
+                                        <a href="/user/update?id=<%= users[j]._id %>" class="btn btn-secondary" title="Modifier"><i class="align-middle fas fa-fw fa-pencil-alt"></i></a>
+                                    <%  } %>
+                                    <% if (users[j].role !== "ADMINISTRATEUR") { %>
+                                        <button title="Supprimer" data-id="<%= users[j]._id %>" class="btn btn-danger delete"><i class="align-middle fas fa-fw fa-trash-alt"></i></button>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <h5 class="card-title">Listes des utilisateurs</h5>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <table id="datatables-basics" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var i = 0; i < users.length; i++) { %>
+                        <% if(users[i].role === "UTILISATEUR") { %>
+                            <tr>
+                                <td><%= i + 1 %></td>
+                                <td><%= users[i].name %></td>
+                                <td><%= users[i].email %></td>
+                                <td><%= users[i].role %></td>
+                                <td>
+                                    <% if (user.email === users[i].email || users[i].role !== "ADMINISTRATEUR") { %>
+                                        <a href="/user/update?id=<%= users[i]._id %>" class="btn btn-secondary" title="Modifier"><i class="align-middle fas fa-fw fa-pencil-alt"></i></a>
+                                    <%  } %>
+                                    <% if (users[i].role !== "ADMINISTRATEUR") { %>
+                                        <button title="Supprimer" data-id="<%= users[i]._id %>" class="btn btn-danger delete"><i class="align-middle fas fa-fw fa-trash-alt"></i></button>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->

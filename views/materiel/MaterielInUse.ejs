@@ -1,0 +1,61 @@
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+
+
+<h1 class="h3 mb-3">Matériels En cours d'utilisations</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <h5 class="card-title">Listes des matériels en cours d'utilisations</h5>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <table id="datatables-basic" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Employé(e)</th>
+                        <th>Marque</th>
+                        <th>Catégories</th>
+                        <th>Numéro de série</th>
+                        <th>Adresse de l'employé</th>
+                        <th>Date de retour</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var i = 0; i < materiel.length; i++) { %>
+                        <% if (materiel[i].materiel.etat === "En prêt"){ %>
+                            <tr>
+                                <td><%= i + 1 %></td>
+                                <td><%= materiel[i].employe.name %></td>
+                                <td><img src="/img/materiel/<%=(materiel[i].materiel.filename) ? materiel[i].materiel.filename : "default/default.jpg" %>" class="avatar img-fluid rounded-circle mr-1" alt="<%= (materiel[i].materiel.filename) ? materiel[i].materiel.filename : "default" %>" style="object-fit: fill;"/><%= materiel[i].materiel.designation %></td>
+                                <td><%= materiel[i].materiel.category.title %></td>
+                                <td><%= materiel[i].materiel.serie %></td>
+                                <td><%= materiel[i].employe.adresse %></td>
+                                <td><%= new Date(materiel[i].dateRetour).toLocaleDateString('fr') %></td>
+                                <td>
+                                    <button title="Retour" type="button" data-iddemand="<%= materiel[i]._id %>" data-idmateriel="<%= materiel[i].materiel._id %>" data-idemploye="<%= materiel[i].employe._id %>" class="btn btn-success return"><i class="align-middle" data-feather="rotate-ccw"></i></button>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                    </tbody>
+                </table>
+                <form>
+                    <input type="hidden" id="utilisateur" name="utilisateur" value="<%= user._id %>">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->

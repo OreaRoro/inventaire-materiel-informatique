@@ -1,0 +1,127 @@
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+
+
+<h1 class="h3 mb-3">Démandes</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <h5 class="card-title">Listes des demande</h5>
+                    <button onclick="add()" class="btn btn-primary text-right">Nouveau  <i class="align-middle mr-2 fas fa-fw fa-plus-square"></i></button>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <table id="datatables-basic" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Employés</th>
+                        <th>Objet à Demander</th>
+                        <th>Status</th>
+                        <th>Date de demande</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var i = 0; i < demande.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= demande[i].employe.name %></td>
+                            <td><img src="/img/materiel/<%=(demande[i].materiel.filename) ? demande[i].materiel.filename : "default/default.jpg" %>" class="avatar img-fluid rounded-circle mr-1" alt="<%= (demande[i].materiel.filename) ? demande[i].materiel.filename : "default" %>" style="object-fit: cover;"/><%= demande[i].materiel.designation %></td>
+                            <td>
+                                <p
+                                class="<% if(demande[i].etat === "En attente") { %>
+                                            text-warning
+                                           <% } else if (demande[i].etat === "Accepté") { %>
+                                            text-success
+                                           <% } else if(demande[i].etat === "Refusé") { %>
+                                            text-danger
+                                       <% } %>"
+                                >
+                                    <%= demande[i].etat %>
+                                </p>
+                            </td>
+                            <td><%= new Date(demande[i].createdAt).toLocaleDateString('fr') %></td>
+                            <td>
+                                <% if (user.role === "UTILISATEUR") { %>
+                                    <button <%=  (demande[i].etat === "Accepté") ? 'disabled' : '' %> type="button" data-iddemand="<%= demande[i]._id %>" data-idmateriel="<%= demande[i].materiel._id %>" title="Supprimer" class="btn btn-danger delete"><i class="align-middle" data-feather="trash"></i></button>
+                                <% } %>
+                                <% if (user.role === "ADMINISTRATEUR") { %>
+                                    <% if (demande[i].etat === "Accepté" || demande[i].etat === "Refusé") { %>
+                                        <button type="button" data-iddemand="<%= demande[i]._id %>" data-idmateriel="<%= demande[i].materiel._id %>" title="Supprimer" class="btn btn-danger delete"><i class="align-middle" data-feather="trash"></i></button>
+                                        <button type="button" data-iddemand="<%= demande[i]._id %>" data-idmateriel="<%= demande[i].materiel._id %>" title="Mettre en attente" class="btn btn-warning pending"><i class="align-middle" data-feather="loader"></i></button>
+                                    <% } else { %>
+                                        <button type="button" data-iddemand="<%= demande[i]._id %>" data-idmateriel="<%= demande[i].materiel._id %>" data-idemploye="<%= demande[i].employe._id %>" title="Annuler" class="btn btn-success accept"><i class="align-middle" data-feather="check"></i></button>
+                                        <button type="button" data-iddemand="<%= demande[i]._id %>" data-idmateriel="<%= demande[i].materiel._id %>" title="Annuler" class="btn btn-danger cancel"><i class="align-middle" data-feather="x"></i></button>
+                                    <% } %>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Default modal</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form id="form">
+                                <input type="hidden" id="utilisateur" name="utilisateur" value="<%= user._id %>">
+                               <div class="modal-body">
+                                   <div class="row">
+                                       <div class="col-12 col-lg-4">
+                                           <label for="employe">Employe</label>
+                                           <select name="employe" id="employe" class="form-control">
+                                               <% for(var j = 0; j < employe.length; j++) { %>
+                                                   <option value="<%= employe[j]._id %>"><%= employe[j].name %></option>
+                                               <% } %>
+                                           </select>
+                                       </div>
+                                       <div class="col-12 col-lg-4">
+                                           <label for="materiel">Matériels</label>
+                                           <select name="materiel" id="materiel" class="form-control">
+                                               <% for (var i = 0; i < materiel.length; i++) { %>
+                                                   <% if (materiel[i].etat === "En stock") { %>
+                                                       <option value="<%= materiel[i]._id %>"><%= materiel[i].designation %></option>
+                                                   <% } %>
+                                               <% } %>
+                                           </select>
+                                       </div>
+                                       <div class="col-12 col-lg-4">
+                                           <label for="dateRetour">Date de retour</label>
+                                           <input type="date" class="form-control" name="dateRetour" id="dateRetour">
+                                       </div>
+                                   </div>
+                                   <div class="row mt-2">
+                                       <div class="col-12">
+                                           <input type="hidden" id="etat" name="etat"  value="En attente" class="form-control">
+                                       </div>
+                                   </div>
+                               </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button onclick="save()" class="btn btn-primary" type="button">Enregistrer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->

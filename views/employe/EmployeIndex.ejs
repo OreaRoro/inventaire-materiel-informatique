@@ -1,0 +1,64 @@
+
+<!--HEADER-->
+<%- include('../_partials/_header') %>
+<!--/HEADER-->
+
+<h1 class="h3 mb-3">Employé(e)s</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <a href="/api/Liste-Employe" title="Exporter en pdf"  class="btn btn-outline-danger"><i class="fa fa-file-pdf"></i> Exproter</a>
+                    <% if (user.role === "ADMINISTRATEUR") { %>
+                       <div>
+                           <a href="/employe/add" class="btn btn-primary text-right">Nouveau  <i class="align-middle mr-2 fas fa-fw fa-plus-square"></i></a>
+                       </div>
+                    <% } %>
+                </div>
+                <!--<h6 class="card-subtitle text-muted">Highly flexible tool that many advanced features to any HTML table.</h6>-->
+            </div>
+            <div class="card-body">
+                <table id="datatables-basic" class="table table-striped dataTable" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Adresse</th>
+                        <th>Téléphone</th>
+                        <th>Fonction</th>
+                        <% if (user.role === "ADMINISTRATEUR") { %>
+                        <th>Actions</th>
+                        <% } %>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (var i = 0; i < employe.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= employe[i].name %></td>
+                            <td><%= employe[i].lastname %></td>
+                            <td><%= employe[i].adresse %></td>
+                            <td><%= employe[i].telephone %></td>
+                            <td><%= employe[i].fonction.title %></td>
+                            <% if (user.role === "ADMINISTRATEUR") { %>
+                            <td>
+                                <a href="/employe/update?id=<%= employe[i]._id %>" class="btn btn-secondary" title="Modifier"><i class="align-middle" data-feather="edit"></i></a>
+                                <button title="Supprimer" data-id="<%= employe[i]._id %>" class="btn btn-danger delete"><i class="align-middle" data-feather="trash"></i></button>
+                            </td>
+                            <% } %>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--HEADER-->
+<%- include('../_partials/_footer') %>
+<!--/HEADER-->
+
